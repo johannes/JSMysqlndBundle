@@ -5,6 +5,7 @@ namespace JS\MysqlndBundle\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Data collector collecting mysqlnd statistics.
@@ -22,6 +23,13 @@ class MysqlndDataCollector  extends DataCollector
         }
     }
     
+    public function onEarlyKernelRequest(GetResponseEvent $event)
+    {
+        if (!$this->initialData && function_exists('mysqli_get_client_stats')) {
+            $this->initialData = mysqli_get_client_stats();
+        }
+    }
+
     /**
      * {@inheritdoc}
      */

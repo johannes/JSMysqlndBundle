@@ -9,8 +9,9 @@
     </parameters>
 
     <services>
-        <service id="data_collector.mysqlnd" class="%js_mysqlnd.data_collector.class%" public="false">
+        <service id="data_collector.mysqlnd" class="%js_mysqlnd.data_collector.class%" public="true">
             <tag name="data_collector" template="JSMysqlndBundle:Collector:mysqlnd" id="mysqlnd" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onEarlyKernelRequest" />
         </service>
     </services>
 
