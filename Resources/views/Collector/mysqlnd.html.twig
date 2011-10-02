@@ -1,0 +1,42 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% if collector.data %}
+        {% set icon %}
+            <img width="20" height="28" alt="mysqlnd" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sKAgoBDqegD/YAAAEVSURBVEjH7ZOxSgNBFEXvisVqFVJFsTFlqmh+QfyAFBZbpraztBQr8QMCmyJgJVuFwSK4Cgs2C5NCWAMhjGAxEYRRRAa7ayfRrMhuAmn2dG/gHd67vAEKCpaPM12IgeHteAjAxflBw8kjXJ0ualsunj9KaNZrqPQlh5NP7G64ONzPJwcA+DeKfCfDB0MAkMrSawvmFmpjGcR6RuB15pAe95KZZqUtjy7Df6UraY/N+jbuRj+nrG6uO3BL0MZmn9SPktQmY7h3ciWZecJXrAEAfmdZLjvXjy9v2TMUA8Mg1tw5vUjN0msLSpVx9VY3pHyy/Gt9ca94Fiku7IsFsWKrK1NPLBdeR3wf/8Lwo4RBrIiCgvn4Aogkh81eljaPAAAAAElFTkSuQmCC"/>
+        {% endset %}
+        {% set text %}
+             <span>{{ collector.data["bytes_received"] }}</span>
+        {% endset %}
+        {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+    {% endif %}
+{% endblock %}
+
+
+{% block menu %}
+<span class="label">
+    <span class="icon"><img src="{{ asset('bundles/jsmysqlnd/images/mysqlnd.png') }}" alt="" /></span>
+    <strong>mysqlnd</strong>
+    {% if collector.data %}
+    <span class="count">
+        <span>{{ collector.data["bytes_received"] }}</span>
+    </span>
+    {% endif %}
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>mysqlnd Statistics</h2>
+
+    {% if collector.data %}
+    <table>
+    {% for key, value in collector.data %}
+   <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+    {% endfor %}
+    </table>
+    {% else %}
+    <strong>No statistics collected for this request.</strong>
+    <p>For collecting data PHP requires the mysqli extension and must use mysqlnd as Client API Library.</p>
+    {{ collector.mysqlInfo|raw }}
+    {%endif %}
+{% endblock %}
