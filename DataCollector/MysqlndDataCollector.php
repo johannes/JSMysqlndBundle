@@ -69,7 +69,7 @@ class MysqlndDataCollector  extends DataCollector
      * 
      * @return string
      */
-    function getMysqlInfo()
+    public function getMysqlInfo()
     {
         if (!extension_loaded("mysqli")) {
             return "The mysqli extension is not available at all.";
