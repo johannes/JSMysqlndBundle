@@ -10,8 +10,8 @@ Requirements
 
 For making use of this bundle you need Symfony2 running on a PHP setup
 where the mysqli extension is activated and mysqlnd is being used. The mysqli 
-extension is only used to retreive data. It is no requirement for your 
-application to use to use mysqli. Applications using  Doctrind and PDO are 
+extension is only used to retrieve data. It is no requirement for your 
+application to use to use mysqli. Applications using  Doctrine and PDO are 
 fully supported.
 
 Installation
@@ -52,7 +52,7 @@ $ php bin/vendors install
 If you prefer instead to use git submodules, the run the following:
 
 ``` bash
-$ git submodule add git://github.com/ohannes/JSMysqlndBundle.git vendor/bundles/JS/MysqlndBundle
+$ git submodule add git://github.com/johannes/JSMysqlndBundle.git vendor/bundles/JS/MysqlndBundle
 $ git submodule update --init
 ```
 
@@ -73,7 +73,7 @@ $loader->registerNamespaces(array(
 ### Step 3: Enable the bundle
 
 Finally, enable the bundle in the kernel. Note: You probably want to do this
-for debug only.
+for development and test systems only.
 
 ``` php
 <?php
