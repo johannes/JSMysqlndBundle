@@ -36,10 +36,18 @@ class MysqlndDataCollector  extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         if (function_exists('mysqli_get_client_stats')) {
-            $this->data = $this->initialData;
-            array_walk($this->data, function (&$value, $key, $current_values) {
+            $this->data['stats'] = $this->initialData;
+            array_walk($this->data['stats'], function (&$value, $key, $current_values) {
                 $value = $current_values[$key] - $value;
             }, mysqli_get_client_stats());
+        } else {
+            $this->data['stats'] = false;
+        }
+        
+        if (function_exists('mysqlnd_qc_get_query_trace_log') && ini_get('mysqlnd_qc.collect_query_trace')) {
+            $this->data['mysqlnd_qc_trace'] = mysqlnd_qc_get_query_trace_log();
+        } else {
+            $this->data['mysqlnd_qc_trace'] = false;
         }
     }
     
@@ -56,9 +64,14 @@ class MysqlndDataCollector  extends DataCollector
      * 
      * @return array 
      */
-    public function getData()
+    public function getStatistics()
     {
-        return $this->data;
+        return $this->data['stats'];
+    }
+    
+    public function getMysqlndQCTrace()
+    {
+        return $this->data['mysqlnd_qc_trace'];
     }
     
     /**

@@ -1,7 +1,7 @@
 {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
 {% block toolbar %}
-    {% if collector.data %}
+    {% if collector.statistics %}
         {% set icon %}
             <img width="20" height="28" alt="mysqlnd" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sKAgoBDqegD/YAAAEVSURBVEjH7ZOxSgNBFEXvisVqFVJFsTFlqmh+QfyAFBZbpraztBQr8QMCmyJgJVuFwSK4Cgs2C5NCWAMhjGAxEYRRRAa7ayfRrMhuAmn2dG/gHd67vAEKCpaPM12IgeHteAjAxflBw8kjXJ0ualsunj9KaNZrqPQlh5NP7G64ONzPJwcA+DeKfCfDB0MAkMrSawvmFmpjGcR6RuB15pAe95KZZqUtjy7Df6UraY/N+jbuRj+nrG6uO3BL0MZmn9SPktQmY7h3ciWZecJXrAEAfmdZLjvXjy9v2TMUA8Mg1tw5vUjN0msLSpVx9VY3pHyy/Gt9ca94Fiku7IsFsWKrK1NPLBdeR3wf/8Lwo4RBrIiCgvn4Aogkh81eljaPAAAAAElFTkSuQmCC"/>
         {% endset %}
@@ -21,18 +21,43 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>mysqlnd Statistics</h2>
+    <div id="JSMysqlndStatistics">
+        <h2>mysqlnd Statistics</h2>
 
-    {% if collector.data %}
-    <table>
-    {% for key, value in collector.data %}
-   <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
-    {% endfor %}
-    </table>
-    <p>Documentation on the individual statistics can be found on <a href="http://php.net/mysqlnd.stats">http://php.net/mysqlnd.stats</a>.</p>
-    {% else %}
-    <strong>No statistics collected for this request.</strong>
-    <p>For collecting data PHP requires the mysqli extension and must use mysqlnd as Client API Library.</p>
-    {{ collector.mysqlInfo|raw }}
-    {%endif %}
+        {% if collector.statistics %}
+        <table>
+        {% for key, value in collector.statistics %}
+        <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+        {% endfor %}
+        </table>
+        <p>Documentation on the individual statistics can be found on <a href="http://php.net/mysqlnd.stats">http://php.net/mysqlnd.stats</a>.</p>
+        {% else %}
+        <strong>No statistics collected for this request.</strong>
+        <p>For collecting data PHP requires the mysqli extension and must use mysqlnd as Client API Library.</p>
+        {{ collector.mysqlInfo|raw }}
+        {%endif %}
+    </div>
+
+    <div id="JSMysqlndQC">
+        <h2>mysqlnd_qc Query Tracing</h2>
+        
+        {% if collector.MysqlndQCTrace %}
+        <table>
+        <tr><td>No.</td><td>Run time</td><td>Store Time</td><td>Cachable</td></tr>
+        {% for key, value in collector.MysqlndQCTrace %}
+        <tr><td colspan="5"><strong>{{ value['query'] }}</strong></td></tr>
+        <tr><td>#{{ key+1 }}</td>
+            <td>{{ value['run_time'] }} ms</td>
+            <td>{{ value['store_time'] }} ms</td>
+            <td>{% if value['eligible_for_caching'] %}Cachable{% else %}Not cachable{% endif %}</td>
+            <td><a href="#" onclick="document.getElementById('JSMysqlndQCStacktrace{{ key+1 }}').style.display='inline'; return false;">Stacktrace</a></td>
+        </tr>
+        <tr><td colspan="5" style="overflow: scroll"><pre id="JSMysqlndQCStacktrace{{ key+1 }}" style="display:none;">{{ value['origin'] }}</pre></td></tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <strong>No myslqnd_qc traces collected for this request.</strong>
+        <p>For collecting trace data PHP requires the <a href="http://php.net/mysqlnd_qc">mysqlnd_qc extension</a> and <i>mysqlnd_qc.collect_query_trace</i> has to be enabled in php.ini.</p>
+        {% endif %}
+    </div>    
 {% endblock %}
