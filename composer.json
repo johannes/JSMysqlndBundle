@@ -11,6 +11,10 @@
             "homepage": "http://schlueters.de"
         },
         {
+            "name": "Max Romanovsky",
+            "homepage": "http://maxromanovsky.com"
+        },
+        {
             "name": "Symfony Community",
             "homepage": "https://github.com/johannes/JSMysqlndBundle/contributors"
         }
