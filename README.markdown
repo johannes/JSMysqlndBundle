@@ -37,9 +37,9 @@ method is the standard method for Symfony 2.1+.
 $ php composer.phar require "js/mysqlnd-bundle=dev-master"
 ```
 
-The second method is the standard  method for Symfony 2.0
 **Using the vendors script**
 
+This method is the standard method for Symfony 2.0
 Add the following lines in your `deps` file:
 
 ```
