@@ -23,10 +23,10 @@
     "require": {
         "php": ">=5.3.2",
         "ext-mysqli": "*",
+        "ext-mysqlnd": "*",
         "symfony/framework-bundle": ">=2.0,<2.3-dev"
     },
     "suggest": {
-        "ext-mysqlnd": "PHP should be compiled with mysqlnd",
         "ext-mysqlnd_qc": "Required for Query Tracing"
     },
     "autoload": {
