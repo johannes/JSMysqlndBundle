@@ -9,9 +9,9 @@ Requirements
 -----------
 
 For making use of this bundle you need Symfony2 running on a PHP setup
-where the mysqli extension is activated and mysqlnd is being used. The mysqli 
-extension is only used to retrieve data. It is no requirement for your 
-application to use to use mysqli. Applications using  Doctrine and PDO are 
+where the mysqli extension is activated and mysqlnd is being used. The mysqli
+extension is only used to retrieve data. It is no requirement for your
+application to use to use mysqli. Applications using  Doctrine and PDO are
 fully supported.
 
 Installation
@@ -19,7 +19,7 @@ Installation
 
 Installation is a quick process:
 
-1. Download JSMysqlndBundle
+1. Download JSMysqlndBundle or install it via Composer
 2. Configure the Autoloader
 3. Enable the Bundle
 
@@ -29,10 +29,17 @@ Ultimately, the JSMysqlndBundle files should be downloaded to the
 `vendor/bundles/JS/MysqlndBundle` directory.
 
 This can be done in several ways, depending on your preference. The first
-method is the standard Symfony2 method.
+method is the standard method for Symfony 2.1+.
+
+**Using Composer**
+
+``` bash
+$ php composer.phar require "js/mysqlnd-bundle=dev-master"
+```
 
 **Using the vendors script**
 
+This method is the standard method for Symfony 2.0
 Add the following lines in your `deps` file:
 
 ```
@@ -57,6 +64,8 @@ $ git submodule update --init
 ```
 
 ### Step 2: Configure the Autoloader
+
+This step should be omitted if you used Composer to install this Bundle.
 
 Add the `JS` namespace to your autoloader:
 
@@ -87,7 +96,7 @@ public function registerBundles()
 
     if (in_array($this->getEnvironment(), array('dev', 'test'))) {
         // ...
-        $bundles[] = new JS/MysqlndBundle();
+        $bundles[] = new \JS\MysqlndBundle\JSMysqlndBundle();
     }
 }
 ```
