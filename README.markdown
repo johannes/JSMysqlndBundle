@@ -34,8 +34,10 @@ method is the standard method for Symfony 2.1+.
 **Using Composer**
 
 ``` bash
-$ php composer.phar require "js/mysqlnd-bundle=dev-master"
+$ php composer.phar require "js/mysqlnd-bundle=1.0.*"
 ```
+
+Take a look at [the page on Packagist web site](https://packagist.org/packages/js/mysqlnd-bundle) for more details and up-to-date version numbers.
 
 **Using the vendors script**
 
