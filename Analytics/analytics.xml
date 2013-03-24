@@ -40,7 +40,7 @@
     <guidance>The database server processed queries where no index was used. Verify your tables are being indexed.</guidance>
   </rule>
   <rule name="Bad index used" severity="warning">
-    <left>{{ no_index_used }}</left>
+    <left>{{ bad_index_used }}</left>
     <operator>greater-than</operator>
     <right>0</right>
     <guidance>The database server processed queries where a bad index was used. Verify your indexes.</guidance>
