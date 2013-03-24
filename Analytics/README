@@ -1,0 +1,11 @@
+mysqlnd statistics analytics is work in progress. Goal is to help users to
+extract important information from the mysqlnd statistics.
+
+Even though this is currently part of the Symfony bundle this should become
+a stand-alone library to be used in other environments.
+
+If you know good metrics please add them to the analytics.xml and send a pull
+request! (Same for any other improvement!)
+
+Screenshot from the initial version is on 
+http://schlueters.de/~johannes/analytics.png
