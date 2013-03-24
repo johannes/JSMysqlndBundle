@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<analytics>
+  <rule name="One greater than two" severity="error">
+    <left>1</left>
+    <operator>greater-than</operator>
+    <right>2</right>
+    <guidance>If this happens something is messed up - 1 can't be greater than two!</guidance>
+  </rule>
+  <!-- rule name="No Connect Failure " severity="warning">
+    <left>{{ connect_failure }}</left>
+    <operator>equal</operator>
+    <right>0</right>
+    <guidance>FOO</guidance>
+  </rule -->
+
+  <rule name="Connect Failure" severity="error">
+    <left>{{ connect_failure }}</left>
+    <operator>greater-than</operator>
+    <right>0</right> 
+    <guidance>PHP could not to the database. Verify your database configuration.</guidance>
+  </rule>
+
+
+  <rule name="Rows skipped (direct query)" severity="warning">
+    <left>{{ rows_skipped_normal }}</left>
+    <operator>greater-than</operator>
+    <right>0</right>
+    <guidance>The database server created a result set for a direct query which wasn't processed completely in the client. Often this is a query where the application expects a single row only but the server generates a larger result set. You should check your queries for missing LIMIT clauses or wrong grouping and make sure to process all result sets.</guidance>
+  </rule>
+  <rule name="Rows skipped (prepared statement)" severity="warning">
+    <left>{{ rows_skipped_ps }}</left>
+    <operator>greater-than</operator>
+    <right>0</right>
+    <guidance>The database server created a result set for a prepared statement query which wasn't processed completely in the client. Often this is a query where the application expects a single row only but the server generates a larger result set. You should check your queries for missing LIMIT clauses or wrong grouping and make sure to process all result sets.</guidance>
+  </rule>
+  <rule name="No index used" severity="warning">
+    <left>{{ no_index_used }}</left>
+    <operator>greater-than</operator>
+    <right>0</right>
+    <guidance>The database server processed queries where no index was used. Verify your tables are being indexed.</guidance>
+  </rule>
+  <rule name="Bad index used" severity="warning">
+    <left>{{ no_index_used }}</left>
+    <operator>greater-than</operator>
+    <right>0</right>
+    <guidance>The database server processed queries where a bad index was used. Verify your indexes.</guidance>
+  </rule>
+</analytics>

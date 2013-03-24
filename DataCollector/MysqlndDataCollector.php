@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
+use JS\MysqlndBundle\Analytics\Engine;
+use JS\MysqlndBundle\Analytics\DefaultRuleProvider;
+use JS\MysqlndBundle\Analytics\Calculator;
+
 /**
  * Data collector collecting mysqlnd statistics.
  *
@@ -95,5 +99,11 @@ class MysqlndDataCollector  extends DataCollector
         ob_end_clean();
         
         return str_replace('<h2><a name="module_mysqli">mysqli</a></h2>', '', $info);
+    }
+
+    public function getAnalytics()
+    {
+        class_Exists(Engine::class);
+        return new Engine(new DefaultRuleProvider(), new Calculator($this->getStatistics()));
     }
 }

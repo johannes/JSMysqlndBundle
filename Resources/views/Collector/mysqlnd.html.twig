@@ -25,6 +25,17 @@
         <h2>mysqlnd Statistics</h2>
 
         {% if collector.statistics %}
+
+        {% for key, value in collector.analytics %}
+	  {% if value.matched %}
+          <ul class="alt">
+            <li class="{{ value.severity }}">{{ value.name }}</li>
+	    <li>{{ value.guidance }}</li>
+	    <li>Failed test: <span title="{{ value.leftValue }}">{{ value.leftFormula }}</span> {{ value.operator }} <span title="{{ value.rightValue }}">{{ value.rightFormula }}</span></li>
+          </ul>
+          {%endif %}
+        {% endfor %}
+
         <table>
             <thead>
                 <tr>
