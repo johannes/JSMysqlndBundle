@@ -103,7 +103,6 @@ class MysqlndDataCollector  extends DataCollector
 
     public function getAnalytics()
     {
-        class_Exists(Engine::class);
         return new Engine(new DefaultRuleProvider(), new Calculator($this->getStatistics()));
     }
 }
