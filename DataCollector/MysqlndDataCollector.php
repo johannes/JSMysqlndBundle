@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
-use JS\MysqlndBundle\Analytics\Engine;
-use JS\MysqlndBundle\Analytics\DefaultRuleProvider;
-use JS\MysqlndBundle\Analytics\Calculator;
+use JS\Mysqlnd\Analytics\Engine;
+use JS\Mysqlnd\Analytics\DefaultRuleProvider;
+use JS\Mysqlnd\Analytics\Calculator;
 
 /**
  * Data collector collecting mysqlnd statistics.
