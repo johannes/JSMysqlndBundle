@@ -10,27 +10,34 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use JS\Mysqlnd\Analytics\Engine;
 use JS\Mysqlnd\Analytics\DefaultRuleProvider;
 use JS\Mysqlnd\Analytics\Calculator;
+use JS\Mysqlnd\Analytics\Collector;
 
 /**
  * Data collector collecting mysqlnd statistics.
  *
  * @author johannes
  */
-class MysqlndDataCollector  extends DataCollector
+class MysqlndDataCollector extends DataCollector
 {
-    private $initialData = false;
-    
+    private $analyticsCollector = false;
+
+    private function startCollector()
+    {
+        $this->analyticsCollector = new Collector();
+	if (Collector::canCollect()) {
+            $this->analyticsCollector->start();
+	}
+    }
+
     public function __construct()
     {
-        if (function_exists('mysqli_get_client_stats')) {
-            $this->initialData = mysqli_get_client_stats();
-        }
+        $this->startCollector();
     }
     
     public function onEarlyKernelRequest(GetResponseEvent $event)
     {
-        if (!$this->initialData && function_exists('mysqli_get_client_stats')) {
-            $this->initialData = mysqli_get_client_stats();
+        if (!$this->analyticsCollector) {
+            $this->startCollector();
         }
     }
 
@@ -39,11 +46,8 @@ class MysqlndDataCollector  extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if (function_exists('mysqli_get_client_stats')) {
-            $this->data['stats'] = $this->initialData;
-            array_walk($this->data['stats'], function (&$value, $key, $current_values) {
-                $value = $current_values[$key] - $value;
-            }, mysqli_get_client_stats());
+        if ($this->analyticsCollector) {
+            $this->data['stats'] = $this->analyticsCollector->collect();
         } else {
             $this->data['stats'] = false;
         }
