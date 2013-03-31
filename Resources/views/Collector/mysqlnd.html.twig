@@ -25,11 +25,17 @@
         <h2>mysqlnd Statistics</h2>
 
         {% if collector.statistics %}
+        {% set show_all = request.query.get('show_all', 0) %}
 
         {% for key, value in collector.analytics %}
-	  {% if value.matched %}
+         {% if show_all or value.matched %}
           <ul class="alt">
-            <li class="{{ value.severity }}">{{ value.name }}</li>
+            {% if value.matched %}
+            <li class="{{ value.severity }}">
+            {% else %}
+            <li class="even">
+            {%endif %}
+	    {{ value.name }}</li>
 	    <li>{{ value.guidance }}</li>
 	    <li>Failed test: <span title="{{ value.leftValue }}">{{ value.leftFormula }}</span> {{ value.operator }} <span title="{{ value.rightValue }}">{{ value.rightFormula }}</span></li>
           </ul>
