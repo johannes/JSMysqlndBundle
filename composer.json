@@ -25,7 +25,7 @@
         "ext-mysqli": "*",
         "ext-mysqlnd": "*",
         "symfony/framework-bundle": ">=2.0,<2.3-dev",
-        "js/mysqlnd-analytics": "dev-1.1.*"
+        "js/mysqlnd-analytics": "1.1.*"
     },
     "suggest": {
         "ext-mysqlnd_qc": "Required for Query Tracing"
