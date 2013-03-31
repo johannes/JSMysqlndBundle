@@ -5,6 +5,8 @@ The JSMysqlndBundle is an extension to th Symfony2 profiling toolbar. It
 extends the data collection with information gathered from PHP's mysqlnd
 database driver, giving more insight on the performance.
 
+![Screenshot](https://f.cloud.github.com/assets/44364/296136/37bad942-94dd-11e2-9eb6-bfc538b071f9.png)
+
 Requirements
 -----------
 
